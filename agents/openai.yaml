@@ -1,0 +1,4 @@
+interface:
+  display_name: "Pruebas de prompts"
+  short_description: "Evalúa clasificación y extracción con datasets"
+  default_prompt: "Usa $probar-prompts para preparar y evaluar una corrida sobre mi dataset."

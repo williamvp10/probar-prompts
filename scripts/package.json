@@ -1,0 +1,14 @@
+{
+  "name": "probar-prompts-scripts",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "ajv": "8.17.1",
+    "ajv-formats": "3.0.1",
+    "jsonc-parser": "3.3.1"
+  },
+  "version": "1.0.0"
+}

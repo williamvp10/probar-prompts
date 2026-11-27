@@ -1,0 +1,91 @@
+{
+  "prompts": [
+    {
+      "id": "clasificador",
+      "version": "v1",
+      "datasetId": "CORREOS",
+      "datasetVersion": "v1",
+      "instructions": "Identifica si el correo trata de facturación o despacho.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "categoria": {
+            "type": "string",
+            "enum": [
+              "facturacion",
+              "despacho"
+            ]
+          }
+        },
+        "required": [
+          "categoria"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "extractor",
+      "version": "v1",
+      "datasetId": "DOCUMENTOS",
+      "datasetVersion": "v1",
+      "instructions": "Extrae solo el total impreso como número. Si falta escribe REVISAR.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "const": "REVISAR"
+              }
+            ]
+          }
+        },
+        "required": [
+          "total"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ],
+  "cases": [
+    {
+      "id": "MAIL-01",
+      "datasetId": "CORREOS",
+      "datasetVersion": "v1",
+      "promptId": "clasificador",
+      "promptVersion": "v1",
+      "group": "Normal",
+      "input": "¿Cuándo llega mi pedido?",
+      "expected": {
+        "categoria": "despacho"
+      }
+    },
+    {
+      "id": "DOC-01",
+      "datasetId": "DOCUMENTOS",
+      "datasetVersion": "v1",
+      "promptId": "extractor",
+      "promptVersion": "v1",
+      "group": "Falta total",
+      "input": "Subtotal $80.000. IVA $15.200.",
+      "expected": {
+        "total": "REVISAR"
+      }
+    },
+    {
+      "id": "DOC-02",
+      "datasetId": "DOCUMENTOS",
+      "datasetVersion": "v1",
+      "promptId": "extractor",
+      "promptVersion": "v1",
+      "group": "Total impreso",
+      "input": "Documento sin cobro. Total $0.",
+      "expected": {
+        "total": 0
+      }
+    }
+  ]
+}
